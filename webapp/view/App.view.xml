@@ -1,0 +1,53 @@
+<mvc:View controllerName="opensap.movies.controller.App" xmlns:mvc="sap.ui.core.mvc" displayBlock="true" xmlns="sap.m"
+	xmlns:core="sap.ui.core" xmlns:f="sap.ui.layout.form" xmlns:unified="sap.ui.unified">
+	<Shell id="shell">
+		<App id="app">
+			<pages>
+				<Page id="page" title="{i18n>title}">
+					<content>
+						<Image src="images/MoviesHeader.png" width="100%" tooltip="{i18n>imageTooltip}"
+							press="sap.m.MessageToast.show('Do you feel like going to the movies?')"
+							 visible="{= !${device>/system/phone} }"></Image>
+						<f:SimpleForm id="form" editable="true" layout="ColumnLayout" title="{i18n>titleForm}" columnsM="2" columnsL="3" columnsXL="3">
+							<f:content>
+								<Label text="{i18n>labelCity}" labelFor="city"/>
+								<SearchField id="city" width="100%" placeholder="{i18n>cityPlaceholder}"/>
+								<Label text="{i18n>labelGenre}" labelFor="genre"/>
+								<Select id="genre" width="100%">
+									<core:ListItem icon="sap-icon://video" key="" text="{i18n>genreAll}"/>
+									<core:ListItem icon="sap-icon://physical-activity" key="Action" text="{i18n>genreAction}"/>
+									<core:ListItem icon="sap-icon://electrocardiogram" key="Horror" text="{i18n>genreHorror}"/>
+									<core:ListItem icon="sap-icon://paper-plane" key="ScienceFiction" text="{i18n>genreScienceFiction}"/>
+								</Select>
+								<Label/>
+								<Button text="{i18n>buttonMovieSearch}" class="sapUiSmallMarginTop" type="Emphasized" press=".onPress('for movies!')"/>
+							</f:content>
+						</f:SimpleForm>
+						<PlanningCalendar id="calendar" startDate="{path: 'movies>/initDate', formatter: '.formatter.formatDate'}" rows="{movies>/movies}"
+							appointmentsVisualization="Filled">
+							<toolbarContent>
+								<Title text="Showtimes" titleStyle="H3"/>
+							</toolbarContent>
+							<rows>
+								<PlanningCalendarRow title="{movies>name}" text="{movies>genre}" appointments="{path: 'movies>appointments', templateShareable: 'true'}">
+									<appointments>
+										<unified:CalendarAppointment startDate="{path: 'movies>startDate', formatter: '.formatter.formatDate'}"
+											endDate="{path: 'movies>endDate', formatter: '.formatter.formatDate'}" title="{movies>info}" text="{movies>cinemaName}" icon="{movies>icon}"
+											type="{movies>type}"></unified:CalendarAppointment>
+									</appointments>
+								</PlanningCalendarRow>
+							</rows>
+							</PlanningCalendar>
+						</content>
+						<footer>
+							<Bar>
+								<contentMiddle>
+									<Link text="{i18n>footerLink}" target="_blank" href="http://www.imdb.com"/>
+								</contentMiddle>
+							</Bar>
+						</footer>
+					</Page>
+				</pages>
+			</App>
+		</Shell>
+	</mvc:View>
